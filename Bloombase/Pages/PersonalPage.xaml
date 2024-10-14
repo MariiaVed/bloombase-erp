@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bloombase.Pages.PersonalPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" /> <!-- Left pane takes all available space -->
+            <ColumnDefinition Width="Auto" /> <!-- Splitter width -->
+            <ColumnDefinition Width="*" /> <!-- Right pane takes all available space -->
+        </Grid.ColumnDefinitions>
+        <ScrollView Grid.Column="0">
+        <CollectionView x:Name="FlowerbedCareList"
+                        ItemsSource="{Binding FlowerbedCares}"
+                        SelectionMode="Single"
+                        VerticalOptions="FillAndExpand"
+                        ItemsUpdatingScrollMode="KeepItemsInView">
+        
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Padding="5" BackgroundColor="#E0E0E0" Margin="5">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectFlowerbedCareCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                            CommandParameter="{Binding .}" />
+                    </StackLayout.GestureRecognizers>
+                    <!-- FlowerbedCare type -->
+                    <Label Text="{Binding FlowerbedCareType}" FontSize="Medium" FontAttributes="Bold" />
+                    <!-- Add more details if needed -->
+                    <StackLayout Orientation="Vertical" Spacing="10">
+                        <Label Text="{Binding Description}" FontSize="Small" />
+                        <Label Text="{Binding Date, StringFormat='{0:d}'}" FontSize="Small" />
+                        <Label Text="{Binding EmployeeId, StringFormat ='Assigned Employee: {0}'}" FontSize="Small" />
+                        <Label Text="{Binding FlowerbedId, StringFormat ='Assigned Flowerbed: {0}'}" FontSize="Small" />
+                    </StackLayout>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        <!-- Empty view for when there are no tasks -->
+        <CollectionView.EmptyView>
+            <Label Text="No tasks found." HorizontalOptions="Center" VerticalOptions="Center"/>
+        </CollectionView.EmptyView>
+    </CollectionView>
+    </ScrollView>
+
+        <!-- Splitter -->
+        <BoxView Grid.Column="1" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+
+        <!-- Right Pane - Empty for now -->
+        <ScrollView Grid.Column="2">
+            <StackLayout Padding="25" Spacing="10"> <!-- Add spacing between buttons -->
+
+                <!-- Other text fields -->
+
+                <Label Text="Task Type:" FontAttributes="Bold"/>
+                <Entry x:Name="TypeEntry" Text="{Binding FlowerbedCare.FlowerbedCareType, Mode=TwoWay}" Placeholder="Ex. Watering" />
+
+                <Label Text="Task Description:" FontAttributes="Bold"/>
+                <Entry x:Name="DescriptionEntry" Text="{Binding FlowerbedCare.Description, Mode=TwoWay}" Placeholder="Ex. Water orchids" />
+                
+                <Label Text="Date:" FontAttributes="Bold"/>
+                <DatePicker x:Name="DateEntry" Date="{Binding FlowerbedCare.Date, Mode=TwoWay}" Format="d"/>
+
+                <Picker x:Name="employeesComboBox" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" Title="Assign an Employee:">
+                    <Picker.ItemDisplayBinding>
+                        <MultiBinding StringFormat="{}{0}, {1}">
+                            <Binding Path="EmployeeName" />
+                            <Binding Path="EmployeeId" />
+                        </MultiBinding>
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+
+                <Picker x:Name="flowerbedsComboBox" 
+                        ItemsSource="{Binding Flowerbeds}" 
+                        SelectedItem="{Binding SelectedFlowerbed}" 
+                        Title="Assign a Flowerbed:">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Path="FlowerbedId" />
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+                    <!-- Add Employee Button -->
+                    <Button Text="Add Task"
+                            Command="{Binding AddFlowerbedCareCommand}"
+                            IsEnabled="{Binding IsButtonAddEnabled}"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="50"
+                            BackgroundColor="Green" /> <!-- Adjust button size as needed -->
+                    
+                    <!-- Other buttons -->
+                    <Button Text="Save"
+                            Command="{Binding SaveFlowerbedCareCommand}"
+                            IsEnabled="{Binding IsButtonSaveEnabled}"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="50"
+                            BackgroundColor="Green" /> <!-- Adjust button size as needed -->
+                    
+                    <Button Text="Delete"
+                            Command="{Binding DeleteFlowerbedCareCommand}"
+                            IsEnabled="{Binding IsButtonDeleteEnabled}"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="50"
+                            BackgroundColor="Green" />
+                    <!-- Add more buttons as needed -->
+                </StackLayout>
+                
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

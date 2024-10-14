@@ -1,0 +1,163 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bloombase.MainPage">
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <!-- Define column for the left part -->
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <!-- Define column for the right part -->
+            <ColumnDefinition Width="1*" />  
+        </Grid.ColumnDefinitions>
+        
+        <!-- Left part of the GridLayout -->
+        <ScrollView Grid.Row="0" Grid.Column="0" Margin="10">
+            <StackLayout>
+                <!-- Title -->
+                <Label Text="News" FontSize="35" HorizontalOptions="Center" Margin="0,10" FontAttributes="Bold" />
+
+                <!-- Panels with image, title, and text -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!-- Define column for the image -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- Define column for the text -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Image column -->
+					<Border Grid.Column="0"
+                    Margin="5"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10" >
+                		<Image Source="greenhouse.jpg" 
+						Aspect="AspectFill" 
+						VerticalOptions="Center" 
+						HeightRequest="400" 
+						WidthRequest="400" />                       	
+           		 	</Border>
+
+                    <!-- Text column -->
+                    <StackLayout Grid.Column="1" Margin="10" Padding="25" Spacing="10" VerticalOptions="CenterAndExpand">
+                        <Label Text="BLOOMBASE HAS LAUNCHED" FontSize="25" FontAttributes="Bold" />
+                        <Label Text="Welcome, valued team members of Enchanted Greenhouse, to Bloombase - your comprehensive tool for enhancing productivity and collaboration within our botanical oasis. Access vital information, manage tasks efficiently, and be inspired by all the beautiful pictures of flowers and plants. Let Blombase empower you in cultivating and preserving the beauty of our garden." />
+                    </StackLayout>
+                </Grid>
+
+                <BoxView HeightRequest="2" Color="Green" HorizontalOptions="FillAndExpand" Margin="20"/>
+
+                <!-- Panels with image, title, and text -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!-- Define column for the image -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- Define column for the text -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Image column -->
+					<Border Grid.Column="0"
+                    Margin="5"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10" >
+                		<Image Source="theshire.jpg" 
+						Aspect="AspectFill" 
+						VerticalOptions="Center" 
+						HeightRequest="250" 
+						WidthRequest="250" />                       	
+           		 	</Border>
+
+                    <!-- Text column -->
+                    <StackLayout Grid.Column="1" Margin="10" VerticalOptions="CenterAndExpand">
+                        <Label Text="Mata ej Hobbitarna" FontSize="25" FontAttributes="Bold" />
+                        <Label Text="De klarar sig själva." />
+                    </StackLayout>
+                </Grid>
+
+                <BoxView HeightRequest="2" Color="Green" HorizontalOptions="FillAndExpand" Margin="20"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!-- Define column for the image -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- Define column for the text -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Image column -->
+					<Border Grid.Column="0"
+                    Margin="5"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10" >
+                		<Image Source="vaktel.jpg" 
+						Aspect="AspectFill" 
+						VerticalOptions="Center" 
+						HeightRequest="250" 
+						WidthRequest="250" />                       	
+           		 	</Border>
+
+                    <!-- Text column -->
+                    <StackLayout Grid.Column="1" Margin="10" VerticalOptions="CenterAndExpand">
+                        <Label Text="Vakteln Vaktor" FontSize="25" FontAttributes="Bold"/>
+                        <Label Text="Kolla på han!" />
+                    </StackLayout>
+                </Grid>
+                <BoxView HeightRequest="2" Color="Green" HorizontalOptions="FillAndExpand" Margin="20"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!-- Define column for the image -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- Define column for the text -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Image column -->
+					<Border Grid.Column="0"
+                    Margin="5"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 10" >
+                		<Image Source="dotnet_bot.png" 
+						Aspect="AspectFit" 
+						VerticalOptions="Center" 
+						HeightRequest="250" 
+						WidthRequest="250" />                       	
+           		 	</Border>
+
+
+                    <!-- Text column -->
+                    <StackLayout Grid.Column="1" Margin="10" VerticalOptions="CenterAndExpand">
+                        <Label Text="Efterlyst Bil" FontSize="25" FontAttributes="Bold" />
+                        <Label Text="Bilen och dess förare är efterlyst av internationella Botanikmaffian. Information som leder till dennes arrest kommer bli belönad." />
+                    </StackLayout>
+                </Grid>				
+                <!-- Add more panels as needed -->
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Middle part of the GridLayout -->
+        <BoxView Grid.Column="2" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+        <!-- Right part of the GridLayout -->
+        
+        <ScrollView Grid.Column="3">
+            <StackLayout Padding="25" Spacing="20" VerticalOptions="Center">
+            <Label Text="Enchanted Greenhouse" FontSize="35" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="As employees of this garden, you are stewards of our vibrant flora and serene landscapes, entrusted with creating enchanting experiences for our visitors. Thank you for being part of our journey to inspire and delight all who enter the Enchanted Greenhouse." 
+                    FontSize="15"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" />
+            <Label Text="Important Numbers" FontSize="35" HorizontalOptions="Center" FontAttributes="Bold" />
+            <Label Text="{Binding TotalEmployees, StringFormat='Employees: {0}', Mode=TwoWay}" FontSize="25" />
+            <Label Text="{Binding TotalFlowerbedCares, StringFormat='Tasks to Do: {0}', Mode=TwoWay}" FontSize="25" />
+            <Label Text="{Binding TotalPlantQuantity, StringFormat='Planted Flowers and Trees: {0}', Mode=TwoWay}" FontSize="25" />
+        </StackLayout>
+        </ScrollView>   
+    </Grid>
+</ContentPage>

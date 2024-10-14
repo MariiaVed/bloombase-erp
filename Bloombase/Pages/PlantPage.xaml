@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bloombase.Pages.PlantPage">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" /> <!-- Left pane takes all available space -->
+                <ColumnDefinition Width="Auto" /> <!-- Splitter width -->
+                <ColumnDefinition Width="*" /> <!-- Right pane takes all available space -->
+            </Grid.ColumnDefinitions>
+
+        <ScrollView Grid.Column="0">
+
+        <!-- CollectionView for displaying the list of plants -->
+        <CollectionView x:Name="PlantsList"
+                        ItemsSource="{Binding Plants}"
+                        SelectionMode="Single"
+                        VerticalOptions="FillAndExpand"
+                        ItemsUpdatingScrollMode="KeepItemsInView">
+            <!-- Template for each plant item -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" BackgroundColor="#E0E0E0" Margin="5" >
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectPlantCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                    CommandParameter="{Binding .}" />
+                        </StackLayout.GestureRecognizers>
+                        
+                        <!-- Plant name -->
+                        <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
+                        <!-- Plant details -->
+                        <Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						
+						<!-- Image Column -->
+						<Border Grid.Column="0" Grid.Row="0"
+								Margin="5"
+								Stroke="Transparent"
+								StrokeThickness="2"
+								StrokeShape="RoundRectangle 10" 
+								HeightRequest="150" 
+								WidthRequest="150">
+							<Image Source="{Binding Image}" 
+									Aspect="AspectFill" 
+									VerticalOptions="Center" 
+									HeightRequest="100" 
+									WidthRequest="100" />                       
+						</Border>
+
+						<!-- Information Column -->
+						<StackLayout Grid.Column="1" Orientation="Vertical" Spacing="10">
+							<!-- Name -->
+							<!-- Plant ID -->
+							<Label Text="{Binding PlantId}" FontSize="Small" />
+							<!-- Botanical Name -->
+							<Label Text="{Binding BotanicalName}" FontSize="Small" />
+							<!-- Origin -->
+							<Label Text="{Binding Origin}" FontSize="Small" />
+							<!-- Price -->
+							<Label Text="{Binding Price, StringFormat='Price: {0:C}'}" FontSize="Small" />
+						</StackLayout>
+					</Grid>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <!-- Empty view for when there are no employees -->
+            <CollectionView.EmptyView>
+                <Label Text="No plants found." HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+        </ScrollView>
+
+        <!-- Splitter -->
+        <BoxView Grid.Column="1" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+
+        <!-- Right pane -->
+        <ScrollView Grid.Column="2">
+        <StackLayout Padding="25" Spacing="10"> <!-- Add spacing between buttons -->
+
+        <!-- Add or edit plant fields -->
+        <Label Text="Name:" FontAttributes="Bold"/>
+        <Entry x:Name="NameEntry" Text="{Binding Plant.Name, Mode=TwoWay}" Placeholder="Name" />
+
+        <Label Text="Botanical Name:" FontAttributes="Bold"/>
+        <Entry x:Name="BotanicalNameEntry" Text="{Binding Plant.BotanicalName, Mode=TwoWay}" Placeholder="Botanical Name" />
+
+        <Label Text="Origin:" FontAttributes="Bold"/>
+        <Entry x:Name="OriginEntry" Text="{Binding Plant.Origin, Mode=TwoWay}"  Placeholder="Origin" />
+
+        <Label Text="Price:" FontAttributes="Bold"/>
+        <Entry x:Name="PriceEntry" Text="{Binding Plant.Price, Mode=TwoWay}" Placeholder="Price" />
+
+        <!-- Area for buttons -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+            <Button Text="Add Plant"
+                    Command="{Binding AddPlantCommand}"
+                    IsEnabled="{Binding IsButtonAddEnabled}"
+                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="40"
+                    BackgroundColor="Green"/>
+            <Button Text="Save"
+                    Command="{Binding SavePlantCommand}"
+                    IsEnabled="{Binding IsButtonSaveEnabled}"
+                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="40"
+                    BackgroundColor="Green"/>
+            <Button Text="Delete"
+                    Command="{Binding DeletePlantCommand}"
+                    IsEnabled="{Binding IsButtonDeleteEnabled}"
+                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="40"
+                    BackgroundColor="Green"/>
+           
+        </StackLayout>
+			<Button Text="Add Image"
+				Clicked="OnSelectImageClicked"
+				HorizontalOptions="FillAndExpand"
+				HeightRequest="40"
+				BackgroundColor="Green"/>
+			<Label Text="Note - Images have to have the same name as the plant." FontAttributes="Italic"/>
+        </StackLayout>
+    </ScrollView>
+</Grid>
+</ContentPage>

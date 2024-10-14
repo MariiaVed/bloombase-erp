@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bloombase.Pages.OverviewPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" /> <!-- Left pane takes all available space -->
+            <ColumnDefinition Width="Auto" /> <!-- Splitter width -->
+            <ColumnDefinition Width="*" /> <!-- Right pane takes all available space -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Pane - CollectionView for displaying the list of employees -->
+        <ScrollView Grid.Column="0">
+            <CollectionView x:Name="EmployeesList"
+                            ItemsSource="{Binding Employees}"
+                            SelectionMode="Single"
+                            ItemsUpdatingScrollMode="KeepItemsInView">
+                <!-- Template for each employee item -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5" BackgroundColor="#E0E0E0" Margin="5">
+
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectEmployeeCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                                    CommandParameter="{Binding .}" />
+                            </StackLayout.GestureRecognizers>
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <!-- Employee name -->
+                                <Label Text="{Binding EmployeeName}" FontSize="Medium" FontAttributes="Bold" />
+                                <!-- Employee ID -->
+                                <Label Text="{Binding EmployeeId, StringFormat='ID: {0}'}" FontSize="Medium" FontAttributes="Bold" />
+                            </StackLayout>
+                            <!-- Employee details -->
+                            <StackLayout Orientation="Vertical" Spacing="10">
+                                <!-- Phone number -->
+                                <Label Text="{Binding PhoneNumber}" FontSize="Small" />
+                                <!-- Hourly salary -->
+                                <Label Text="{Binding HourlySalary, StringFormat='Hourly Salary: {0:C}'}" FontSize="Small" />
+                                <!-- Authority level -->
+                                <Label Text="{Binding AuthorityLevel, StringFormat='Authority Level: {0}'}" FontSize="Small" />
+                                <!-- Role -->
+                                <Label Text="{Binding Role}" FontSize="Small" />
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <!-- Empty view for when there are no employees -->
+                <CollectionView.EmptyView>
+                    <Label Text="No employees found." HorizontalOptions="Center" VerticalOptions="Center" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </ScrollView>
+
+        <!-- Splitter -->
+        <BoxView Grid.Column="1" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+
+        <!-- Right Pane - Add Employee Button -->
+        <ScrollView Grid.Column="2">
+            <StackLayout Padding="25" Spacing="10"> <!-- Add spacing between buttons -->
+
+                <!-- Other text fields -->
+
+                <Label Text="Name:" FontAttributes="Bold" />
+                <Entry x:Name="NameEntry" Text="{Binding Employee.EmployeeName, Mode=TwoWay}" Placeholder="Name" />
+
+                <Label Text="Phone Number:" FontAttributes="Bold" />
+                <Entry x:Name="PhoneNumberEntry" Text="{Binding Employee.PhoneNumber, Mode=TwoWay}" Placeholder="Phone Number" />
+
+                <Label Text="Hourly Salary:" FontAttributes="Bold" />
+                <Entry x:Name="HourlySalaryEntry" Text="{Binding Employee.HourlySalary, Mode=TwoWay}" Placeholder="Hourly Salary" />
+
+                <Label Text="Role:" FontAttributes="Bold" />
+                <Entry x:Name="RoleEntry" Text="{Binding Employee.Role, Mode=TwoWay}" Placeholder="Role" />
+
+                <Label Text="Authority Level:" FontAttributes="Bold" />
+                <Entry x:Name="AuthorityLevelEntry" Text="{Binding Employee.AuthorityLevel, Mode=TwoWay}" Placeholder="Authority Level" />
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+                    <!-- Add Employee Button -->
+                    <Button Text="Add Employee"
+                            Command="{Binding AddEmployeeCommand}"
+                            IsEnabled="{Binding IsButtonAddEnabled}"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="40"
+                            BackgroundColor="Green" /> <!-- Adjust button size as needed -->
+
+                    <!-- Other buttons -->
+                    <Button Text="Save"
+                            Command="{Binding SaveEmployeeCommand}"
+                            IsEnabled="{Binding IsButtonSaveEnabled}"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="40"
+                            BackgroundColor="Green" /> <!-- Adjust button size as needed -->
+
+                    <Button Text="Delete"
+                            Command="{Binding DeleteEmployeeCommand}"
+                            IsEnabled="{Binding IsButtonDeleteEnabled}"
+                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="40"
+                            BackgroundColor="Green" />
+                </StackLayout>
+                <BoxView HeightRequest="2" Color="Green" HorizontalOptions="FillAndExpand" Margin="20"/>
+                <Picker x:Name="flowerbedsComboBox"
+                        ItemsSource="{Binding Flowerbeds}"
+                        SelectedItem="{Binding SelectedFlowerbed}"
+                        Title="Change Responsible Employee for Flowerbed:">
+                    <Picker.ItemDisplayBinding>
+                    <MultiBinding StringFormat="Flowerbed Id: {0}, Responsible Employee: {1}">
+                        <Binding Path="FlowerbedId" />
+                        <Binding Path="ResponsibleEmployeeId"/>
+                    </MultiBinding>
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+                <Button Text="Confirm"
+                        Command="{Binding AssignResponsibilityCommand}"
+                        IsEnabled="{Binding IsButtonConfirmEnabled}"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="40"
+                        BackgroundColor="Green" />
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

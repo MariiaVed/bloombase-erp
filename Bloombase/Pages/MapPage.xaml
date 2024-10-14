@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bloombase.Pages.MapPage"> 
+    
+    <Grid BackgroundColor="#FFFFFF">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Spacer StackLayout for the top -->
+        <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Vertical" VerticalOptions="Center" Margin="10">
+            <Label Text="Choose Place:" FontAttributes="Bold" />
+            <Picker x:Name="PlacePicker" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Places}" ItemDisplayBinding="{Binding PlaceName}" />
+        </StackLayout>
+
+        <!-- Flowerbeds ListView -->
+        <ListView x:Name="FlowerbedList" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding FlowerbedsInPlace}" VerticalOptions="FillAndExpand" BackgroundColor="#FFFFFF" ItemSelected="OnFlowerbedSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="5" Margin="5" BackgroundColor="#EFEFEF">
+                            <StackLayout Orientation="Vertical" Padding="10" Spacing="10">
+                                <Label Text="{Binding FlowerbedId, StringFormat='Flowerbed: {0}'}" TextColor="Black" />
+                                <Label Text="{Binding Size, StringFormat='Size: {0}'}" TextColor="Black" />
+                                <Label Text="{Binding ClimateId, StringFormat='Climate: {0}'}" TextColor="Black" />
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <BoxView Grid.Column="1" Grid.RowSpan="3" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+
+         <StackLayout Grid.Row="0" Grid.Column="2" Padding="10">
+            <Label Text="{Binding Flowerbed.FlowerbedId, StringFormat='Showing Plants for Flowerbed: {0}'}" TextColor="Black" FontSize="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+
+        <!-- PlantInFlowerbedDetails ListView -->
+        <ListView x:Name="PlantInFlowerbedDetailsList" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" ItemsSource="{Binding PlantInFlowerbedDetails}" VerticalOptions="FillAndExpand" BackgroundColor="#FFFFFF" ItemSelected="OnPlantInFlowerbedDetailsSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="5" Margin="5" BackgroundColor="#EFEFEF">
+                            <StackLayout Padding="10" Orientation="Horizontal" Spacing="10">
+                                 <Border Margin="5" Stroke="Transparent" StrokeThickness="2" StrokeShape="RoundRectangle 10" HeightRequest="100" WidthRequest="100">
+                                    <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" VerticalOptions="Center"/>
+                                </Border>
+                                <StackLayout VerticalOptions="Center" Spacing="5">
+                                    <Label Text="{Binding Name}" TextColor="Black" />
+                                    <Label Text="{Binding Quantity}" TextColor="Black" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+         <BoxView Grid.Column="3" Grid.RowSpan="3" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+
+        <StackLayout Grid.Row="0" Grid.Column="4" Padding="10">
+            <Label x:Name="PlantsInClimate" Text="{Binding Flowerbed.ClimateId, StringFormat='Showing Plants for Climate: {0}'}" TextColor="Black" FontSize="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+
+        <!-- All Plants ListView -->
+        <ListView x:Name="AllPlantsList" Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" ItemsSource="{Binding Plants}" VerticalOptions="FillAndExpand" BackgroundColor="#FFFFFF" ItemSelected="OnAllPlantsItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="5" Margin="5" BackgroundColor="#EFEFEF">
+                            <StackLayout Padding="10" Orientation="Horizontal" Spacing="10">
+                                <Border Margin="5" Stroke="Transparent" StrokeThickness="2" StrokeShape="RoundRectangle 10" HeightRequest="100" WidthRequest="100">
+                                    <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100" VerticalOptions="Center"/>
+                                </Border>
+                                <StackLayout VerticalOptions="Center" Spacing="5">
+                                    <Label Text="{Binding Name}" TextColor="Black" />
+                                    <Label Text="{Binding ClimateId}" TextColor="Black" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <BoxView Grid.Column="5" Grid.RowSpan="3" BackgroundColor="Green" WidthRequest="2" VerticalOptions="FillAndExpand" />
+
+        <!-- Second Pane -->
+        <StackLayout Grid.Row="1" Grid.Column="6" Grid.RowSpan="2"  Padding="10">
+            <Border Margin="5" Stroke="Transparent" StrokeThickness="2" StrokeShape="RoundRectangle 10" HeightRequest="150" WidthRequest="200">
+                <Image Source="{Binding Plant.Image}" Aspect="AspectFill" VerticalOptions="Center" HeightRequest="100" WidthRequest="150" />
+            </Border>
+            <StackLayout Padding="10" Spacing="15">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+                <Label x:Name="FlowerbedTitle" Text="{Binding Flowerbed.FlowerbedId, StringFormat='Flowerbed: {0}'}" FontAttributes="Bold" />
+                <Label Text="{Binding Flowerbed.Size, StringFormat='Flowerbe's Size: {0}'}" FontAttributes="Bold"/>
+                </StackLayout>
+                <Label Text="{Binding Plant.Name, StringFormat='Flower: {0}'}" FontAttributes="Bold" />
+                <Label Text="Enter Quantity:" FontAttributes="Bold"/>
+                <Entry Placeholder="Enter Quantity" HorizontalOptions="FillAndExpand" Text="{Binding PlantInFlowerbed.Quantity, Mode=TwoWay}" TextColor="Black" />
+            </StackLayout>
+                
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10">
+                    <Button Text="Update" Command="{Binding UpdatePlantInFlowerbedCommand}" HorizontalOptions="FillAndExpand" HeightRequest="40" BackgroundColor="Green" />
+                    <Button Text="Add" Command="{Binding AddPlantInFlowerbedCommand}" HorizontalOptions="FillAndExpand" HeightRequest="40" BackgroundColor="Green" />
+                    <Button Text="Delete" Command="{Binding DeletePlantInFlowerbedCommand}" HorizontalOptions="FillAndExpand" HeightRequest="40" BackgroundColor="Green" />
+                </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>      
